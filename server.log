@@ -1,0 +1,4 @@
+
+> ts_servers@1.0.0 dev
+> npx tsc && node dist/index.js
+
