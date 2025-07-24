@@ -1,4 +1,5 @@
- type Config = {
+process.loadEnvFile('../.env')
+type Config = {
     api: APIConfig,
     db: DBConfig
 }
@@ -21,7 +22,7 @@ export const config:Config = {
         port: Number(process.env.PORT)
     },
     db:{
-        url: process.env.DBURL ? process.env.DBURL:''
+        url: process.env.DBURL ? process.env.DBURL : ''
     }
 }
 
