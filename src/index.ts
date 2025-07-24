@@ -8,6 +8,7 @@ import postgres from "postgres";
 import {migrate} from "drizzle-orm/postgres-js/migrator"
 import {drizzle} from "drizzle-orm/postgres-js"
 import {config} from "./config.js"
+import { create_User } from "./api/createUser.js";
 const PORT = process.env.PORT ? process.env.PORT:8080
 const app = express();
 
@@ -28,6 +29,9 @@ app.get('/api/healthz',healthz)
 app.get('/admin/metrics',metrics)
 app.post('/admin/reset',handlerReset)
 app.post('/api/validate_chirp',validate_chirp)
+
+app.post('/api/users', create_User)
+
 app.use(handleErr)
 app.listen(PORT, ()=>{
     console.log(`Server running at port ${PORT}`)
