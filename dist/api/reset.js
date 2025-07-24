@@ -1,14 +1,16 @@
+import { config } from "../config.js";
 import { ForbiddenError } from "./errors.js";
-import { db } from "../db/index.js";
-import { users } from "../db/schema.js";
+import { reset } from "../db/queries/users.js";
 process.loadEnvFile("./.env");
 export async function handlerReset(_, res, next) {
     try {
-        if (process.env.PLATFORM != 'dev') {
-            throw new ForbiddenError("You are not allowed here.");
+        if (config.api.platform != 'dev') {
+            throw new ForbiddenError("Reset only allowed in dev environment..");
         }
-        const result = await db.delete(users);
-        res.status(200).send("Deleted all users");
+        config.api.fileserverHits = 0;
+        await reset();
+        res.write("Hits reset to 0");
+        res.end();
     }
     catch (e) {
         next(e);
