@@ -1,3 +1,4 @@
+process.loadEnvFile('../.env');
 export const config = {
     api: {
         fileserverHits: 0,

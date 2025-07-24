@@ -1,4 +1,10 @@
+import type { MigrationConfig } from "drizzle-orm/migrator";
 process.loadEnvFile('../.env')
+
+const migrationConfig:MigrationConfig = {
+    migrationsFolder : "./db/migrations"
+}
+
 type Config = {
     api: APIConfig,
     db: DBConfig
@@ -13,7 +19,7 @@ type Config = {
 
  type DBConfig={
     url:string,
-    // migrationConfig:MigrationConfig;
+    migrationConfig:MigrationConfig;
 }
 
 export const config:Config = {
@@ -22,7 +28,8 @@ export const config:Config = {
         port: Number(process.env.PORT)
     },
     db:{
-        url: process.env.DBURL ? process.env.DBURL : ''
+        url: process.env.DBURL ? process.env.DBURL : '',
+        migrationConfig: migrationConfig
     }
 }
 

@@ -1,4 +1,5 @@
 import { config } from "../config.js";
+import { BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError } from "./errors.js";
 export function middlewareLogResponses(req, res, next) {
     res.on("finish", () => {
         const statusCode = res.statusCode;
@@ -19,35 +20,23 @@ export function handleErr(err, req, res, next) {
         });
     }
     else if (err instanceof UnauthorizedError) {
-        res.status(401).send("Unauthorized");
+        res.status(401).send({
+            "error": err.message
+        });
     }
     else if (err instanceof ForbiddenError) {
-        res.status(403).send("Forbidden");
+        res.status(403).send({
+            "error": err.message
+        });
     }
     else if (err instanceof NotFoundError) {
-        res.status(404).send("Unauthorized");
+        res.status(404).send({
+            "error": err.message
+        });
     }
     else {
-        res.status(500).send("Something went wrong.");
-    }
-}
-export class BadRequestError extends Error {
-    constructor(message) {
-        super(message);
-    }
-}
-export class UnauthorizedError extends Error {
-    constructor(message) {
-        super(message);
-    }
-}
-export class ForbiddenError extends Error {
-    constructor(message) {
-        super(message);
-    }
-}
-export class NotFoundError extends Error {
-    constructor(message) {
-        super(message);
+        res.status(500).send({
+            "error": err.message
+        });
     }
 }

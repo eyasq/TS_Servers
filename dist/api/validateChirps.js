@@ -1,4 +1,4 @@
-import { BadRequestError } from "../api/middlewareLogResponses.js";
+import { BadRequestError } from "../api/errors.js";
 export async function validate_chirp(req, res, next) {
     try {
         res.header("Content-Type", "application/json");
